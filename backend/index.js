@@ -15,6 +15,7 @@ const app = express();
 // middleware - any code that executes between us getting a request on the server and us sending a response
 
 // to access data from request object we need to add a middleware - it looks for body in request - if it does, then it passess it and attaches it to the request object so that we can access it in the request handler
+app.use(cors());
 app.use(express.json());
 
 app.use((req, res, next) => {

@@ -7,12 +7,9 @@ const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext();
 
   const handleDelete = async () => {
-    const response = await fetch(
-      `https://tnn-mern.vercel.app/api/workouts/${workout._id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const response = await fetch(`/api/workouts/${workout._id}`, {
+      method: "DELETE",
+    });
     const json = await response.json();
 
     if (response.ok) {

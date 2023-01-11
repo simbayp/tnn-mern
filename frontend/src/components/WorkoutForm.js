@@ -30,7 +30,7 @@ function WorkoutForm() {
 
     const workout = { title, load, reps }; // dummy workout object that we will send as body of request
 
-    const response = await fetch("https://tnn-mern.vercel.app/api/workouts", {
+    const response = await fetch("/api/workouts", {
       method: "POST",
       body: JSON.stringify(workout), // we can't send object, we will turn it into string
       headers: {
