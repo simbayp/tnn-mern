@@ -1,0 +1,123 @@
+/* google font */
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Zen+Dots&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  /* box-sizing: border-box; */
+}
+
+/* layout */
+:root {
+  /* --primary: #1aac83; */
+  --primary: #fcd5ce;
+  --secondary: #ffb5a7;
+  --tertiary: #6d6875;
+  --headliner: #f08080;
+  --error: #e7195a;
+}
+body {
+  /* background: #f1f1f1; */
+  background: var(--secondary);
+  margin: 0;
+  font-family: "Zen Dots";
+}
+header {
+  /* background: #fff; */
+  background: var(--primary);
+}
+header .container {
+  max-width: 1100px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header a {
+  /* color: #333; */
+  color: var(--headliner);
+  text-decoration: none;
+}
+header a h1 {
+  font-size: 3rem;
+}
+.pages {
+  color: var(--tertiary);
+  max-width: 1100px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+/* homepage */
+.home {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 100px;
+}
+.workout-details {
+  background: var(--primary);
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.workout-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--headliner);
+}
+.workout-details p {
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--tertiary);
+}
+.workout-details span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: var(--primary);
+  padding: 6px;
+  border-radius: 50%;
+  color: var(--headliner);
+}
+
+/* new workout form */
+label,
+input {
+  display: block;
+}
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  background: var(--primary);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+form button {
+  background: var(--headliner);
+  border: 0;
+  color: var(--primary);
+  padding: 10px;
+  font-family: "Zen Dots";
+  border-radius: 4px;
+  cursor: pointer;
+}
+div.error {
+  padding: 10px;
+  background: var(--primary);
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+input.error {
+  border: 1px solid var(--error);
+}
