@@ -10,7 +10,7 @@ const cors = require('cors'); // for production
 const mongoose = require('mongoose');
 const workoutRoutes = require('./routes/workouts');
 
-// creates express app
+// creates an express app
 const app = express();
 
 // middleware - any code that executes between us getting a request on the server and us sending a response
