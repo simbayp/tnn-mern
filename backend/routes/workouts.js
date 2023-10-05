@@ -12,6 +12,8 @@ const router = express.Router();
 
 // attach a handler to this router
 // router.get("/hello", () => {}); // this will fire only when the request comes from /api/workouts/hello
+// e.g.: Test route
+router.get('/test', (req, res) => res.json({ mssg: 'This is testing route' }));
 
 // we need to start interacting with our db to add, retrieve or update documents
 
