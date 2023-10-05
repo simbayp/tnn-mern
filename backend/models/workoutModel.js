@@ -1,6 +1,6 @@
 // here we can define how our Workout documents should look
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 // to create a new schema - schema defines the structure of a particular type of document
 const Schema = mongoose.Schema; // LHS Schema is a function
@@ -24,5 +24,5 @@ const workoutSchema = new Schema(
   { timestamps: true }
 );
 
-// it will create a collection named 'workouts' since mongoose pluralises the model 'Workout'
-module.exports = mongoose.model("Workout", workoutSchema); // we will interact with this "Workout"
+// it will create a collection named 'workouts' since mongoose lowercases & pluralises the model name 'Workout'
+module.exports = mongoose.model('Workout', workoutSchema); // we will interact with this "Workout"
