@@ -1,13 +1,13 @@
-const express = require("express");
+const express = require('express');
 const {
   createWorkout,
   getWorkouts,
   getWorkout,
   deleteWorkout,
   updateWorkout,
-} = require("../controllers/workoutController");
+} = require('../controllers/workoutController');
 
-// creates an instance of the Router
+// creates an instance of a Router
 const router = express.Router();
 
 // attach a handler to this router
@@ -16,18 +16,18 @@ const router = express.Router();
 // we need to start interacting with our db to add, retrieve or update documents
 
 // GET all workouts
-router.get("/", getWorkouts);
+router.get('/', getWorkouts);
 
 // GET a single workout
-router.get("/:id", getWorkout);
+router.get('/:id', getWorkout);
 
 // POST a new workout
-router.post("/", createWorkout);
+router.post('/', createWorkout);
 
 // DELETE a workout
-router.delete("/:id", deleteWorkout);
+router.delete('/:id', deleteWorkout);
 
 // UPDATE a workout
-router.patch("/:id", updateWorkout);
+router.patch('/:id', updateWorkout);
 
 module.exports = router;
