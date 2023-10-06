@@ -5,9 +5,13 @@ const mongoose = require('mongoose');
 
 // GET all workouts
 const getWorkouts = async (req, res) => {
-  // 'workouts' is an array of documents
-  const workouts = await Workout.find({}).sort({ createdAt: -1 }); // try-catch is not suitable here
-  res.status(200).json(workouts); // we send the array of documents as 'json' which will be 'fetched' by the frontend '<Home />' page
+  try {
+    // 'workouts' is an array of documents
+    const workouts = await Workout.find({}).sort({ createdAt: -1 }); // desc. order = newest first
+    res.status(200).json(workouts); // we send the array of documents as 'json' which will be 'fetched' by the frontend '<Home />' page
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 // GET a single workout
@@ -19,13 +23,17 @@ const getWorkout = async (req, res) => {
     return res.status(404).json({ error: '_id is not valid' });
   }
 
-  const workout = await Workout.findById(id); // try-catch is not suitable here
+  try {
+    const workout = await Workout.findById(id);
 
-  if (!workout) {
-    return res.status(404).json({ error: 'No such workout is present' });
+    if (!workout) {
+      return res.status(404).json({ error: 'No such workout is present' });
+    }
+
+    res.status(200).json(workout);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-
-  res.status(200).json(workout);
 };
 
 // POST a new workout
@@ -68,13 +76,17 @@ const deleteWorkout = async (req, res) => {
     return res.status(404).json({ error: '_id is not valid' });
   }
 
-  const workout = await Workout.findOneAndDelete({ _id: id });
+  try {
+    const workout = await Workout.findOneAndDelete({ _id: id });
 
-  if (!workout) {
-    return res.status(400).json({ error: 'No such workout is present' });
+    if (!workout) {
+      return res.status(400).json({ error: 'No such workout is present' });
+    }
+
+    res.status(200).json(workout);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-
-  res.status(200).json(workout);
 };
 
 // UPDATE a workout
@@ -86,18 +98,22 @@ const updateWorkout = async (req, res) => {
     return res.status(404).json({ error: '_id is not valid' });
   }
 
-  const workout = await Workout.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
+  try {
+    const workout = await Workout.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body, // whatever fields are send here are updated rest of the fields remain the same
+      }
+    );
+
+    if (!workout) {
+      return res.status(400).json({ error: 'No such workout is present' });
     }
-  );
 
-  if (!workout) {
-    return res.status(400).json({ error: 'No such workout is present' });
+    res.status(200).json(workout);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-
-  res.status(200).json(workout);
 };
 
 module.exports = {
