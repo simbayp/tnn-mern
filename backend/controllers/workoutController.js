@@ -1,7 +1,7 @@
 // Here we will create constroller functions which we will reference in the router file
 // We need to import the 'Workout' model because we will be using that to interact with the database
-const Workout = require("../models/workoutModel");
-const mongoose = require("mongoose");
+const Workout = require('../models/workoutModel');
+const mongoose = require('mongoose');
 
 // GET all workouts
 const getWorkouts = async (req, res) => {
@@ -16,13 +16,13 @@ const getWorkout = async (req, res) => {
 
   // to reduce db calls we can pre-check whether the id is valid or not but for this we need to require 'mongoose'
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "_id is not valid" });
+    return res.status(404).json({ error: '_id is not valid' });
   }
 
   const workout = await Workout.findById(id); // try-catch is not suitable here
 
   if (!workout) {
-    return res.status(404).json({ error: "No such workout is present" });
+    return res.status(404).json({ error: 'No such workout is present' });
   }
 
   res.status(200).json(workout);
@@ -30,29 +30,30 @@ const getWorkout = async (req, res) => {
 
 // POST a new workout
 const createWorkout = async (req, res) => {
-  const { title, load, reps } = req.body;
+  const { title, load, reps } = req.body; // getting req from client
 
   let emptyFields = [];
 
   if (!title) {
-    emptyFields.push("title");
+    emptyFields.push('title');
   }
   if (!load) {
-    emptyFields.push("load");
+    emptyFields.push('load');
   }
   if (!reps) {
-    emptyFields.push("reps");
+    emptyFields.push('reps');
   }
   if (emptyFields.length > 0) {
     return res
       .status(400)
-      .json({ error: "Please fill in all fields", emptyFields });
+      .json({ error: 'Please fill in all fields', emptyFields });
   }
 
   // creates and adds a 'workout' document inside 'workouts' collection
   try {
-    const workout = await Workout.create({ title, load, reps });
-    res.status(200).json(workout);
+    const workout = await Workout.create({ title, load, reps }); // querying the database and getting back the result (asynchronous operation)
+
+    res.status(200).json(workout); // sending data back to client
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -64,13 +65,13 @@ const deleteWorkout = async (req, res) => {
 
   // to reduce db calls we can pre-check whether the id is valid or not but for this we need to require 'mongoose'
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "_id is not valid" });
+    return res.status(404).json({ error: '_id is not valid' });
   }
 
   const workout = await Workout.findOneAndDelete({ _id: id });
 
   if (!workout) {
-    return res.status(400).json({ error: "No such workout is present" });
+    return res.status(400).json({ error: 'No such workout is present' });
   }
 
   res.status(200).json(workout);
@@ -82,7 +83,7 @@ const updateWorkout = async (req, res) => {
 
   // to reduce db calls we can pre-check whether the id is valid or not but for this we need to require 'mongoose'
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "_id is not valid" });
+    return res.status(404).json({ error: '_id is not valid' });
   }
 
   const workout = await Workout.findOneAndUpdate(
@@ -93,7 +94,7 @@ const updateWorkout = async (req, res) => {
   );
 
   if (!workout) {
-    return res.status(400).json({ error: "No such workout is present" });
+    return res.status(400).json({ error: 'No such workout is present' });
   }
 
   res.status(200).json(workout);
