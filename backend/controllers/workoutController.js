@@ -1,4 +1,4 @@
-// Here we will create constroller functions which we will reference in the router file
+// Here we will create controller functions which we will reference in the router file
 // We need to import the 'Workout' model because we will be using that to interact with the database
 const Workout = require('../models/workoutModel');
 const mongoose = require('mongoose');
