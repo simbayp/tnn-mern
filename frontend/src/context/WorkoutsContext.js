@@ -1,18 +1,19 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer } from 'react';
 
 export const WorkoutsContext = createContext();
 
+// All these 'cases' will make the local state in-sync with the db, we are not changing the db here
 export const workoutsReducer = (state, action) => {
   switch (action.type) {
-    case "SET_WORKOUTS":
+    case 'SET_WORKOUTS':
       return {
         workouts: action.payload,
       };
-    case "CREATE_WORKOUT":
+    case 'CREATE_WORKOUT':
       return {
         workouts: [action.payload, ...state.workouts],
       };
-    case "DELETE_WORKOUT":
+    case 'DELETE_WORKOUT':
       return {
         workouts: state.workouts.filter((w) => w._id !== action.payload._id),
       };
