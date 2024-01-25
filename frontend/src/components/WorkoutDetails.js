@@ -1,22 +1,29 @@
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 
 // date fns
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 const WorkoutDetails = ({ workout }) => {
+  const { user } = useAuthContext();
   const { dispatch } = useWorkoutsContext();
 
   const handleDelete = async () => {
+    if (!user) return;
+
     const response = await fetch(
       `https://tnn-mern.vercel.app/api/workouts/${workout._id}`,
       {
-        method: "DELETE",
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
     const json = await response.json();
 
     if (response.ok) {
-      dispatch({ type: "DELETE_WORKOUT", payload: json });
+      dispatch({ type: 'DELETE_WORKOUT', payload: json });
     }
   };
 

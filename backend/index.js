@@ -9,6 +9,7 @@ const express = require('express');
 const cors = require('cors'); // for production
 const mongoose = require('mongoose');
 const workoutRoutes = require('./routes/workouts');
+const userRoutes = require('./routes/user');
 
 // creates express app
 const app = express();
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 // route handler which reacts to requests
 // to only fire these routes when we come to a specific path, we should pass the first argument
 app.use('/api/workouts', workoutRoutes); // see the comment on workouts.js
+app.use('/api/user', userRoutes);
 // app.get("/", (req, res) => {
 //   res.json({ mssg: "Welcome to the app" });
 // });

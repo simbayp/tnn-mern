@@ -7,6 +7,9 @@ const {
   updateWorkout,
 } = require('../controllers/workoutController');
 
+// Requiring the auth middleware so that workouts of only verfied users are shown
+const requireAuth = require('../middleware/requireAuth');
+
 // creates an instance of a Router
 const router = express.Router();
 
@@ -16,6 +19,10 @@ const router = express.Router();
 router.get('/test', (req, res) => res.json({ mssg: 'This is testing route' }));
 
 // we need to start interacting with our db to add, retrieve or update documents
+
+// Using the auth middleware
+// require auth for all workout routes
+router.use(requireAuth);
 
 // GET all workouts
 router.get('/', getWorkouts);

@@ -6,8 +6,9 @@ const mongoose = require('mongoose');
 // GET all workouts
 const getWorkouts = async (req, res) => {
   try {
-    // 'workouts' is an array of documents
-    const workouts = await Workout.find({}).sort({ createdAt: -1 }); // desc. order = newest first
+    const user_id = req.user._id;
+    // 'workouts' is an array of documents (now we only want workouts of logged in user)
+    const workouts = await Workout.find({ user_id }).sort({ createdAt: -1 }); // desc. order = newest first
     res.status(200).json(workouts); // we send the array of documents as 'json' which will be 'fetched' by the frontend '<Home />' page
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -59,7 +60,8 @@ const createWorkout = async (req, res) => {
 
   // creates and adds a 'workout' document inside 'workouts' collection
   try {
-    const workout = await Workout.create({ title, load, reps }); // querying the database and getting back the result (asynchronous operation)
+    const user_id = req.user._id;
+    const workout = await Workout.create({ title, load, reps, user_id }); // querying the database and getting back the result (asynchronous operation)
 
     res.status(200).json(workout); // sending data back to client
   } catch (error) {

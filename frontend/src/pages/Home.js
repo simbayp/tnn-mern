@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 
 // components import
@@ -7,11 +8,16 @@ import WorkoutForm from '../components/WorkoutForm';
 
 function Home() {
   // const [workouts, setWorkouts] = useState(null);
+  const { user } = useAuthContext();
   const { workouts, dispatch } = useWorkoutsContext();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch('https://tnn-mern.vercel.app/api/workouts'); // The Response object, in turn, does not directly contain the actual JSON response body but is instead a representation of the entire HTTP response. So, to extract the JSON body content from the Response object, we use the json() method, which returns a second promise that resolves with the result of parsing the response body text as JSON
+      const response = await fetch('https://tnn-mern.vercel.app/api/workouts', {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }); // The Response object, in turn, does not directly contain the actual JSON response body but is instead a representation of the entire HTTP response. So, to extract the JSON body content from the Response object, we use the json() method, which returns a second promise that resolves with the result of parsing the response body text as JSON
 
       // 'json' is an array of objects where each object represents a workout
       const json = await response.json(); // .json() returns a promise that resolves with the result of parsing the response body text as JSON
@@ -22,8 +28,10 @@ function Home() {
       }
     };
 
-    fetchWorkouts();
-  }, [dispatch]);
+    if (user) {
+      fetchWorkouts();
+    }
+  }, [dispatch, user]);
 
   return (
     <div className="home">

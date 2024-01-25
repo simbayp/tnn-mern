@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 
 function WorkoutForm() {
+  const { user } = useAuthContext();
   const { dispatch } = useWorkoutsContext();
 
-  const [title, setTitle] = useState("");
-  const [load, setLoad] = useState("");
-  const [reps, setReps] = useState("");
+  const [title, setTitle] = useState('');
+  const [load, setLoad] = useState('');
+  const [reps, setReps] = useState('');
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
@@ -28,13 +30,19 @@ function WorkoutForm() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    if (!user) {
+      setError('You must be logged in');
+      return;
+    }
+
     const workout = { title, load, reps }; // dummy workout object that we will send as body of request
 
-    const response = await fetch("https://tnn-mern.vercel.app/api/workouts", {
-      method: "POST",
+    const response = await fetch('https://tnn-mern.vercel.app/api/workouts', {
+      method: 'POST',
       body: JSON.stringify(workout), // we can't send object, we will turn it into string
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
       },
     });
 
@@ -46,11 +54,11 @@ function WorkoutForm() {
     }
     if (response.ok) {
       setEmptyFields([]);
-      setTitle("");
-      setLoad("");
-      setReps("");
+      setTitle('');
+      setLoad('');
+      setReps('');
       setError(null);
-      dispatch({ type: "CREATE_WORKOUT", payload: json });
+      dispatch({ type: 'CREATE_WORKOUT', payload: json });
     }
   }
 
@@ -63,7 +71,7 @@ function WorkoutForm() {
         type="text"
         onChange={handleTitleChange}
         value={title}
-        className={emptyFields.includes("title") ? "error" : ""}
+        className={emptyFields.includes('title') ? 'error' : ''}
       />
 
       <label>Load (kg):</label>
@@ -71,7 +79,7 @@ function WorkoutForm() {
         type="number"
         onChange={handleLoadChange}
         value={load}
-        className={emptyFields.includes("load") ? "error" : ""}
+        className={emptyFields.includes('load') ? 'error' : ''}
       />
 
       <label>Reps:</label>
@@ -79,7 +87,7 @@ function WorkoutForm() {
         type="number"
         onChange={handleRepsChange}
         value={reps}
-        className={emptyFields.includes("reps") ? "error" : ""}
+        className={emptyFields.includes('reps') ? 'error' : ''}
       />
 
       <button>Add Workout</button>
