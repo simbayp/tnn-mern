@@ -130,6 +130,9 @@ nav {
 nav a {
   margin-left: 10px;
 }
+nav span {
+  color: var(--tertiary);
+}
 nav button {
   /* background: #fff; */
   background: var(--headliner);
